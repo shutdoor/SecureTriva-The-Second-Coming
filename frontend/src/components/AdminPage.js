@@ -76,7 +76,7 @@ function AdminPage(){
 
     return (
         <>
-        {loggedIn === true && isAdmin === true && 
+        {loggedIn === true && isAdmin === "true" && 
             <div>            
                 <table className="adminTable">
                     <tbody className="adminTbody">

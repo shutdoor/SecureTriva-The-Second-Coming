@@ -29,7 +29,7 @@ function Navbar() {
             <h3 style={{ marginRight: "25px" }} className="navText">Edit Information</h3>
           </Link>
         }
-        {isAdmin &&
+        {loggedIn && isAdmin === "true" &&
           <Link to={{ pathname: '/admin' }}>
             <h3 className="navText">Admin Page</h3>
           </Link>

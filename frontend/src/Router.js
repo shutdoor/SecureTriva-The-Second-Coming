@@ -39,7 +39,7 @@ function Router() {
             <Login />
           </Route>
         }
-        {isAdmin && loggedIn &&
+        {isAdmin === "true" && loggedIn &&
           <Route path="/admin">
             <AdminPage />
           </Route>

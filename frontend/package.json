@@ -36,5 +36,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.14.5"
+  },
+  "presets": [
+    [
+      "@babel/preset-react",
+      {
+        "pragma": "dom", 
+        "pragmaFrag": "DomFrag", 
+        "throwIfNamespace": false, 
+        "runtime": "classic"
+      }
+    ]
+  ]
 }
