@@ -56,11 +56,9 @@ exports.isAdmin = (req, res) => {
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         const userInfo = jwt.decode(token);
-        console.log(userInfo.user);
         User.findById(userInfo.user, (error, result) => {
             if (error) res.json(false);
             if (result) {
-                console.log(result);
                 res.send(result.isAdmin);
             }
         })

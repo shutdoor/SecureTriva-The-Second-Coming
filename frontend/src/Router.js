@@ -32,6 +32,11 @@ function Router() {
             <Route path="/submit">
               <SubmitTrivia />
             </Route>
+            {isAdmin == "true" &&
+              <Route path="/admin">
+                <AdminPage />
+              </Route>
+            }
           </>
         }
         {!(loggedIn) &&
@@ -39,11 +44,11 @@ function Router() {
             <Login />
           </Route>
         }
-        {isAdmin === "true" && loggedIn &&
+        {/* {isAdmin === "true" && loggedIn &&
           <Route path="/admin">
             <AdminPage />
           </Route>
-        }
+        } */}
       </Switch>
     </BrowserRouter>
   );

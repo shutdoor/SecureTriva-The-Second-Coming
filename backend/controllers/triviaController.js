@@ -7,7 +7,6 @@ require('dotenv').config();
 exports.createNewTriviaQuestion = (req, res) => {
     let newTrivia = new Trivia(req.body);
     newTrivia["isAccepted"] = false;
-    console.log('newTrivia: ', newTrivia);
     newTrivia.save((error, result) => {
         if (error) res.sendStatus(400);
         res.json(result);
@@ -17,14 +16,12 @@ exports.createNewTriviaQuestion = (req, res) => {
 exports.getAllTriviaQuestions = async (req, res) => {
     const userId = req.user;
     const user = await User.findById(userId);
-    console.log('user: ', user);
     if (user.isAdmin === true) {
-        Trivia.find({}, (error, result) => {
+        Trivia.find({ isAccepted: false }, (error, result) => {
             if (error) res.sendStatus(400);
-            console.log(result);
             res.json(result);
         })
-    }else {
+    } else {
         res.sendStatus(401);
     }
 }
@@ -38,8 +35,12 @@ exports.getTriviaQuestionByCategory = (req, res) => {
 
 exports.updateTriviaQuestion = (req, res) => {
     let updatedTrivia = req.body;
-    Trivia.findOneAndUpdate({ _id: updatedTrivia._id }, updatedTrivia).then((error, result) => {
-        if (error) res.sendStatus(400);
-        res.json(result);
-    })
+    Trivia.findByIdAndUpdate(updatedTrivia._id, updatedTrivia).then((result) => {
+        if(result){
+            console.log(result);
+            res.json(result);
+        }else{
+            res.sendStatus(400);
+        }
+    });
 }

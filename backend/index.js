@@ -3,12 +3,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 
 dotenv.config();
 
 // set up server
 
 const app = express();
+app.use(helmet());
 const PORT = 3001;
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 

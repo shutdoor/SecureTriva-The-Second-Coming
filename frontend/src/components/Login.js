@@ -30,6 +30,7 @@ function Login() {
 
       await getLoggedIn();
       history.push("/");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

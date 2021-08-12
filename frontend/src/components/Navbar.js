@@ -25,15 +25,18 @@ function Navbar() {
       </div>
       <div className="rightNav">
         {loggedIn &&
-          <Link to={{ pathname: '/edit' }}>
-            <h3 style={{ marginRight: "25px" }} className="navText">Edit Information</h3>
-          </Link>
+          <>
+            <Link to={{ pathname: '/edit' }}>
+              <h3 style={{ marginRight: "25px" }} className="navText">Edit Information</h3>
+            </Link>
+            {isAdmin === "true" &&
+              <Link to={{ pathname: '/admin' }}>
+                <h3 className="navText">Admin Page</h3>
+              </Link>
+            }
+          </>
         }
-        {loggedIn && isAdmin === "true" &&
-          <Link to={{ pathname: '/admin' }}>
-            <h3 className="navText">Admin Page</h3>
-          </Link>
-        }
+        
         {loggedIn &&
           <Logout />
         }
