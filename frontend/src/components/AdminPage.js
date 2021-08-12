@@ -39,6 +39,15 @@ function AdminPage(){
         }
     }
 
+    async function updateQuizData(index) {
+        for (let i = 0; i < quizData.length; i++) {
+            if(index === i){
+                const url = "http://localhost:3001/trivia/update"
+                await axios.post(url, quizData[i]);
+            }
+        }
+    }
+
     function renderQuizTable() {
         return quizData.map((data, index) => {
           const { _id, category, question, createdAt, answer, isAccepted } = data; 
@@ -57,7 +66,7 @@ function AdminPage(){
                   </select>
               </td>
               <td className="adminTd">{createdAt}</td>
-              <td><button onClick={() => this.updateQuizData(index)}>Update</button></td>
+              <td><button onClick={() => updateQuizData(index)}>Update</button></td>
             </tr>
           )
         })
@@ -65,20 +74,20 @@ function AdminPage(){
 
     return (
         <>
-        {/* {loggedIn === true && isAdmin === true && */
+        {loggedIn === true && isAdmin === true && 
             <div>            
-            <table className="adminTable">
-                <tbody className="adminTbody">
-                <tr>
-                    <th className="adminTh">Category</th>
-                    <th className="adminTh">Question</th>
-                    <th className="adminTh">Answer</th>
-                    <th className="adminTh">IsAccepted</th>
-                    <th className="adminTh" id="createdAt">CreatedAt</th>
-                </tr>
-                {renderQuizTable()}
-                </tbody>
-            </table>
+                <table className="adminTable">
+                    <tbody className="adminTbody">
+                    <tr>
+                        <th className="adminTh">Category</th>
+                        <th className="adminTh">Question</th>
+                        <th className="adminTh">Answer</th>
+                        <th className="adminTh">IsAccepted</th>
+                        <th className="adminTh" id="createdAt">CreatedAt</th>
+                    </tr>
+                    {renderQuizTable()}
+                    </tbody>
+                </table>
             </div> 
         }
         </>
