@@ -61,7 +61,7 @@ function AdminPage(){
               <td className="adminTd">
                   <select
                     value={`${isAccepted}`}
-                    onChange={handleChange(index)}
+                    onChange={() => handleChange(index)}
                   >
                       <option value="true">True</option>
                       <option value="false">False</option>
