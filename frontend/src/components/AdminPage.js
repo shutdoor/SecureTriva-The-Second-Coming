@@ -46,6 +46,8 @@ function AdminPage(){
                 await axios.post(url, quizData[i]);
             }
         }
+
+        history.push("/");
     }
 
     function renderQuizTable() {
