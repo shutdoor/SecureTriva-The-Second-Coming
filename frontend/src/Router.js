@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import AdminPage from "./components/AdminPage";
 import EditInformation from "./components/EditInformation";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -9,6 +10,12 @@ import AuthContext from "./context/AuthContext";
 
 function Router() {
   const { loggedIn } = useContext(AuthContext);
+  const [isAdmin, setIsAdmin] = useState(undefined);
+
+  // const isAdmin = localStorage.getItem("isValid");
+  useEffect(() => {
+    setIsAdmin(localStorage.getItem("isValid"));
+  }, [!isAdmin]);
 
   return (
     <BrowserRouter>
@@ -32,11 +39,11 @@ function Router() {
             <Login />
           </Route>
         }
-        {/* {isAdmin &&
+        {
           <Route path="/admin">
             <AdminPage />
           </Route>
-        } */}
+        }
       </Switch>
     </BrowserRouter>
   );

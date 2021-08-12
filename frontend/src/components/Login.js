@@ -25,7 +25,7 @@ function Login() {
       await axios.post(loginURL, loginData);
 
       const isAdmin = await axios.get(adminURL);
-      localStorage.setItem("isValid", isAdmin.data);
+      await localStorage.setItem("isValid", isAdmin.data);
 
 
       await getLoggedIn();

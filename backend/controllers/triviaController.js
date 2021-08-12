@@ -17,9 +17,11 @@ exports.createNewTriviaQuestion = (req, res) => {
 exports.getAllTriviaQuestions = async (req, res) => {
     const userId = req.user;
     const user = await User.findById(userId);
+    console.log('user: ', user);
     if (user.isAdmin === true) {
         Trivia.find({}, (error, result) => {
             if (error) res.sendStatus(400);
+            console.log(result);
             res.json(result);
         })
     }else {

@@ -30,8 +30,7 @@ function EditInformation() {
             phone,
             email
         }
-        console.log(requestBody);
-
+        
         await axios.post(url, requestBody);
 
         history.push("/");
