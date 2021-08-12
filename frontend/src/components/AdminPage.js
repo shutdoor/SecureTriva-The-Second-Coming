@@ -20,7 +20,7 @@ function AdminPage(){
         const url = "http://localhost:3001/trivia/all"
         axios.get(url)
         .then(res => {
-            if(res) console.log(res.data);
+            if(res) setQuizData(res.data);
         });
 
         // console.log('res: ', res);
@@ -30,6 +30,15 @@ function AdminPage(){
         getQuizData();
     }, [])
 
+    function handleChange(evt, index){
+        evt.preventDefault();
+        for (let i = 0; i < quizData.length; i++) {
+            if(index === i){
+                quizData[i].isAccepted = Boolean(evt.target.value);
+            }
+        }
+    }
+
     function renderQuizTable() {
         return quizData.map((data, index) => {
           const { _id, category, question, createdAt, answer, isAccepted } = data; 
@@ -38,7 +47,15 @@ function AdminPage(){
               <td className="adminTd">{category}</td>
               <td className="adminTd">{question}</td>
               <td className="adminTd">{answer}</td>
-              <td className="adminTd"><input type="radio" id="trueToggle" value="true"></input><label for="trueToggle">True</label><input type="radio" id="falseToggle" value="false"></input><label for="falseToggle">False</label></td>
+              <td className="adminTd">
+                  <select
+                    value={`${isAccepted}`}
+                    onChange={handleChange(index)}
+                  >
+                      <option value="true">True</option>
+                      <option value="false">False</option>
+                  </select>
+              </td>
               <td className="adminTd">{createdAt}</td>
               <td><button onClick={() => this.updateQuizData(index)}>Update</button></td>
             </tr>
@@ -59,7 +76,7 @@ function AdminPage(){
                     <th className="adminTh">IsAccepted</th>
                     <th className="adminTh" id="createdAt">CreatedAt</th>
                 </tr>
-                {/* {renderQuizTable()} */}
+                {renderQuizTable()}
                 </tbody>
             </table>
             </div> 
