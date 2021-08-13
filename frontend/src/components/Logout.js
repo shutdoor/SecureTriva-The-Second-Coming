@@ -9,7 +9,7 @@ function Logout() {
     const history = useHistory();
 
     async function logOut() {
-        const url = "http://localhost:3001/user/logout";
+        const url = "http://10.0.115.231:3001/user/logout";
         await axios.get(url);
         localStorage.clear("IsValid");
         await getLoggedIn();

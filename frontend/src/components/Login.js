@@ -18,8 +18,8 @@ function Login() {
         email,
         password,
       };
-      const loginURL = "http://localhost:3001/user/login";
-      const adminURL = "http://localhost:3001/user/isAdmin";
+      const loginURL = "http://10.0.115.231:3001/user/login";
+      const adminURL = "http://10.0.115.231:3001/user/isAdmin";
 
 
       await axios.post(loginURL, loginData);

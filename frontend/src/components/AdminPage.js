@@ -13,7 +13,7 @@ function AdminPage() {
 
     async function getQuizData() {
         console.log(isAdmin);
-        const url = "http://localhost:3001/trivia/all"
+        const url = "http://10.0.115.231:3001/trivia/all"
         const res = await axios.get(url);
         setQuizData(res.data);
     }
@@ -35,7 +35,7 @@ function AdminPage() {
         console.log(index);
         for (let i = 0; i < quizData.length; i++) {
             if (index === i) {
-                const url = "http://localhost:3001/trivia/update";
+                const url = "http://10.0.115.231:3001/trivia/update";
                 console.log(quizData[i]);
                 await axios.post(url, quizData[i]);
             }

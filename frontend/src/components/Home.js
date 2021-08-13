@@ -16,7 +16,7 @@ function Home() {
     }
 
     async function getTrivia() {
-        let url = `http://localhost:3001/trivia/get/${category}`;
+        let url = `http://10.0.115.231:3001/trivia/get/${category}`;
         const response = await axios.get(url);
         let length = response.data.length;
         let randomInt =Math.floor(Math.random() * length);
