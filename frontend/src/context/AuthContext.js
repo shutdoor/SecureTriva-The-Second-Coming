@@ -7,7 +7,7 @@ function AuthContextProvider(props) {
   const [loggedIn, setLoggedIn] = useState(undefined);
 
   async function getLoggedIn() {
-    const url = "http://10.0.115.231:3000/api/user/loggedIn";
+    const url = "/api/user/loggedIn";
     const loggedInRes = await axios.get(url);
     setLoggedIn(loggedInRes.data);
   }
