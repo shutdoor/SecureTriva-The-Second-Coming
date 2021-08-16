@@ -18,8 +18,8 @@ function Login() {
         email,
         password,
       };
-      const loginURL = "http://localhost:3000/api/user/login";
-      const adminURL = "http://localhost:3000/api/user/isAdmin";
+      const loginURL = "http://10.0.115.231:3000/api/user/login";
+      const adminURL = "http://10.0.115.231:3000/api/user/isAdmin";
 
 
       await axios.post(loginURL, loginData);
