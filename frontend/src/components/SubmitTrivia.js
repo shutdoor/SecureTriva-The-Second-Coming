@@ -10,7 +10,7 @@ function SubmitTrivia() {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        const url = "http://10.0.115.231:3001/trivia/create";
+        const url = "http://localhost:3000/api/trivia/create";
         const quizBody = {
             category,
             question,

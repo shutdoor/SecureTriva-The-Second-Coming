@@ -18,7 +18,7 @@ function EditInformation() {
 
     async function submitUpdate(evt) {
         evt.preventDefault();
-        const url = "http://10.0.115.231:3001/user/update";
+        const url = "http://localhost:3000/api/user/update";
 
         let requestBody = {
             firstName,
@@ -37,7 +37,7 @@ function EditInformation() {
     }
 
     async function getUserInfo() {
-        const url = "http://10.0.115.231:3001/user/update";
+        const url = "http://localhost:3000/api/user/update";
         const res = await axios.get(url);
         console.log(res.data);
         setFirstName(res.data.firstName);

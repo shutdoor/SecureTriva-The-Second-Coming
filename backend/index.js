@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
+const path = require("path");
 
 dotenv.config();
 
@@ -11,20 +12,16 @@ dotenv.config();
 
 const app = express();
 app.use(helmet());
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://10.0.115.231:3000"
-    ],
     credentials: true,
   })
 );
-
 // connect to mongoDB
 
 mongoose.connect(
@@ -39,5 +36,7 @@ mongoose.connect(
   }
 );
 
-app.use("/user", require("./routers/userRouter"));
-app.use("/trivia", require("./routers/triviaRouter"));
+
+app.use("/", express.static("./build"));
+app.use("/api/user", require("./routers/userRouter"));
+app.use("/api/trivia", require("./routers/triviaRouter"));
