@@ -4,9 +4,6 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const helmet = require("helmet");
-const http = require("http");
-const https = require("https");
-const fs = require("fs");
 
 dotenv.config();
 
@@ -15,16 +12,8 @@ dotenv.config();
 const app = express();
 app.use(helmet());
 
-var options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}
-
-http.createServer(app).listen(80);
-https.createServer(options, app).listen(443);
-
-// const PORT = 3000;
-// app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 
 
 
