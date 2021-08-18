@@ -24,9 +24,9 @@ function Login() {
       const adminURL = "http://10.0.115.231:3001/user/isAdmin";
 
 
-      const logInRes = await axios.post(loginURL, loginData);
-      console.log(logInRes);
-      setCookie(logInRes.data.token);
+      const logInRes = await axios.post(loginURL, loginData).then((res) => {
+      	setCookie("token", res.data["token"]);
+      });
 
       const isAdmin = await axios.get(adminURL);
       await localStorage.setItem("isValid", isAdmin.data);
