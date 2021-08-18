@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import { useCookies } from "react-cookie";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookie, setCookie] = useCookies(["token"]);
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -22,7 +24,9 @@ function Login() {
       const adminURL = "http://10.0.115.231:3001/user/isAdmin";
 
 
-      await axios.post(loginURL, loginData);
+      const logInRes = await axios.post(loginURL, loginData);
+      console.log(logInRes);
+      setCookie(logInRes.data.token);
 
       const isAdmin = await axios.get(adminURL);
       await localStorage.setItem("isValid", isAdmin.data);

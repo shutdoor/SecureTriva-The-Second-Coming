@@ -24,13 +24,7 @@ exports.login = async (req, res) => {
             process.env.ACCESS_TOKEN_SECRET
         );
 
-        res
-            .cookie("token", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-            })
-            .send();
+        res.status(200).json({token}).send();
     } catch (err) {
         res.status(500).send();
     }
@@ -38,7 +32,7 @@ exports.login = async (req, res) => {
 
 exports.loggedIn = (req, res) => {
     try {
-        const token = req.cookies.token;
+        const token = req.header('x-auth-token');
         if (!token) return res.json(false);
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -51,7 +45,7 @@ exports.loggedIn = (req, res) => {
 
 exports.isAdmin = (req, res) => {
     try {
-        const token = req.cookies.token;
+        const token = req.header('x-auth-token');
         if (!token) return res.json(false);
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -67,14 +61,9 @@ exports.isAdmin = (req, res) => {
     }
 }
 
-exports.logout = (req, res) => {
-    res.cookie("token", "", {
-        httpOnly: true,
-        expires: new Date(0),
-        secure: true,
-        sameSite: "none",
-    }).send();
-}
+// exports.logout = (req, res) => {
+//     res.send(200).json({token: ""});
+// }
 
 exports.updateUser = async (req, res) => {
     const userId = req.user;

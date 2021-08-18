@@ -25,8 +25,6 @@ app.use(
   })
 );
 
-// connect to mongoDB
-
 mongoose.connect(
   process.env.MONGODB_CONNECTION_STRING,
   {
