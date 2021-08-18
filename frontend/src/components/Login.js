@@ -24,7 +24,7 @@ function Login() {
       const adminURL = "http://10.0.115.231:3001/user/isAdmin";
 
 
-      const logInRes = await axios.post(loginURL, loginData).then((res) => {
+      await axios.post(loginURL, loginData).then((res) => {
       	setCookie("token", res.data["token"]);
       });
 
