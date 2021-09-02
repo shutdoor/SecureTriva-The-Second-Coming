@@ -2,13 +2,25 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Logout from './Logout';
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function Navbar() {
   const { loggedIn } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(undefined);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [cookie, setCookie] = useCookies(["token"]);
 
   useEffect(() => {
-    setIsAdmin(localStorage.getItem("isValid"));
+    async function getIsAdmin() {
+      let url = "http://10.0.115.231:3001/user/isAdmin";
+      const res = await axios.get(url, {headers: {
+        "x-auth-token": cookie.token 
+      }});
+      console.log(res.data);
+      setIsAdmin(res.data);
+    }
+    // setIsAdmin(localStorage.getItem("isValid"));
+    getIsAdmin();
   }, [!isAdmin]);
 
   return (
@@ -29,7 +41,7 @@ function Navbar() {
             <Link to={{ pathname: '/edit' }}>
               <h3 style={{ marginRight: "25px" }} className="navText">Edit Information</h3>
             </Link>
-            {isAdmin === "true" &&
+            {isAdmin === true &&
               <Link to={{ pathname: '/admin' }}>
                 <h3 className="navText">Admin Page</h3>
               </Link>

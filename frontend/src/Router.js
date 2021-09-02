@@ -7,14 +7,31 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import SubmitTrivia from "./components/SubmitTrivia";
 import AuthContext from "./context/AuthContext";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 
 function Router() {
   const { loggedIn } = useContext(AuthContext);
   const [isAdmin, setIsAdmin] = useState(undefined);
+  const [cookie, setCookie] = useCookies(["token"]);
 
-  // const isAdmin = localStorage.getItem("isValid");
+  const history = useHistory();
+
   useEffect(() => {
-    setIsAdmin(localStorage.getItem("isValid"));
+    async function getIsAdmin() {
+      let url = "http://10.0.115.231:3001/user/isAdmin";
+      const res = await axios.get(url, {
+        headers: {
+          "x-auth-token": cookie.token
+        }
+      });
+      console.log(res.data);
+      setIsAdmin(res.data);
+    }
+
+    getIsAdmin();
   }, [!isAdmin]);
 
   return (
@@ -32,10 +49,16 @@ function Router() {
             <Route path="/submit">
               <SubmitTrivia />
             </Route>
-            {isAdmin == "true" &&
+            {isAdmin == true &&
               <Route path="/admin">
                 <AdminPage />
               </Route>
+            }
+            {isAdmin == false &&
+             <Route path='/admin' component={() => { 
+              window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; 
+              return null;
+         }}/>
             }
           </>
         }

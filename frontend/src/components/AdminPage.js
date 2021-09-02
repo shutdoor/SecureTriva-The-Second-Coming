@@ -2,33 +2,20 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
+import { useCookies } from "react-cookie";
 
 function AdminPage() {
-    // let quizData = [];
     const [quizData, setQuizData] = useState(undefined);
+    const [isAdmin, setIsAdmin] = useState(undefined);
+    const [cookie, setCookie] = useCookies(["token"]);
 
     const { loggedIn } = useContext(AuthContext);
-    const [isAdmin, setIsAdmin] = useState(localStorage.getItem("isValid"));
-    const history = useHistory();
 
     async function getQuizData() {
         console.log(isAdmin);
         const url = "http://10.0.115.231:3001/trivia/all"
         const res = await axios.get(url);
         setQuizData(res.data);
-    }
-
-    // useEffect(() => {
-    //     getQuizData();
-    // }, [])
-
-    function handleChange(evt, index) {
-        // evt.preventDefault();
-        // for (let i = 0; i < quizData.length; i++) {
-        //     if (index === i) {
-        //         quizData[i].isAccepted = Boolean(evt.target.value);
-        //     }
-        // }
     }
 
     async function updateQuizData(evt, index) {
@@ -40,7 +27,6 @@ function AdminPage() {
                 await axios.post(url, quizData[i]);
             }
         }
-
         window.location.reload();
     }
 
@@ -67,34 +53,38 @@ function AdminPage() {
 
 
     useEffect(() => {
-        // setIsAdmin(localStorage.getItem("isValid"));
+        async function getIsAdmin() {
+            let url = "http://10.0.115.231:3001/user/isAdmin";
+            const res = await axios.get(url, {
+                headers: {
+                    "x-auth-token": cookie.token
+                }
+            });
+            console.log(res.data);
+            setIsAdmin(res.data);
+        }
         getQuizData();
     }, []);
-    // !isAdmin, !quizData
 
     return (
         <>
             {loggedIn === true &&
-                <>
-                    {isAdmin === "true" &&
-                        < div >
-                            <table className="adminTable">
-                                <tbody className="adminTbody">
-                                    <tr>
-                                        <th className="adminTh">Category</th>
-                                        <th className="adminTh">Question</th>
-                                        <th className="adminTh">Answer</th>
-                                        <th className="adminTh">IsAccepted</th>
-                                        <th className="adminTh" id="createdAt">CreatedAt</th>
-                                    </tr>
-                                    {quizData &&
-                                        renderQuizTable()
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    }
-                </>
+                < div >
+                    <table className="adminTable">
+                        <tbody className="adminTbody">
+                            <tr>
+                                <th className="adminTh">Category</th>
+                                <th className="adminTh">Question</th>
+                                <th className="adminTh">Answer</th>
+                                <th className="adminTh">IsAccepted</th>
+                                <th className="adminTh" id="createdAt">CreatedAt</th>
+                            </tr>
+                            {quizData &&
+                                renderQuizTable()
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
         </>
     )
