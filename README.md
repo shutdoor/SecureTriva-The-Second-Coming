@@ -1,0 +1,1 @@
+This project was created by Shutdoor & WistyDagel. This was created for a College course, and focuses on creation of a secure website. This secure website was then "attacked/hacked" by fellow students.
